@@ -7,7 +7,6 @@ from random import randint
 class Pawn:
     uname = None
     """User name seted on app start UI"""
-    timeOfEffect = None
     cur_dir = os.path.dirname(os.path.realpath(__file__))
     scripts_dir = os.path.join(cur_dir, 'scripts')
     scripts_list = os.listdir(scripts_dir)
@@ -19,23 +18,23 @@ class Pawn:
         :param str uname: User name
         """
         self.uname = uname
-        self.timeOfEffect = randint(1, 3)
 
     def pawn(self):
         """
         Exec all
-        :return:
+        :return: script name
+        :rtype: str
         """
-        # TODO roll_dice to get selected
+        # roll_dice to get selected
         run_this = self.__roll_dice()
 
-        # TODO execute selected
+        # execute selected
         self.__exec_it(run_this['path'])
 
-        # TODO preserve/log execution
+        # preserve/log execution
         self.__log_execution(run_this['name'])
 
-        # TODO return selected name
+        # return selected name
         return run_this['name']
 
     def __roll_dice(self):
@@ -45,26 +44,29 @@ class Pawn:
         """
         selected = self.scripts_list[randint(0, len(self.scripts_list) - 1)]
         return {
+            # Remove .sh from script name
             'name': re.sub('.sh$', '', selected),
             'path': os.path.join(self.scripts_dir, selected)
         }
 
     @staticmethod
-    def __exec_it(d):
+    def __exec_it(directory):
         """
         Execute given command in dude shell
-        :param str d:
+        :param str directory:
         :return:
         """
-        print(d)
-        out = subprocess.Popen(d, stdin=subprocess.PIPE, shell=True)
-        return str(out)
+        return str(subprocess.Popen(
+            directory, stdin=subprocess.PIPE, shell=True
+        ))
 
     def __log_execution(self, cmd):
+        """
+
+        :param cmd:
+        :return:
+        """
         dir_logs = os.path.join(self.cur_dir, 'logs')
         dir_file = os.path.join(dir_logs, 'log.txt')
         with open(dir_file, "a") as myfile:
             myfile.write("{} just did {}.\n".format(self.uname, cmd))
-
-
-

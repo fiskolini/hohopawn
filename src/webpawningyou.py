@@ -8,6 +8,7 @@ sio = socketio.Server()
 app = Flask(__name__)
 server = eventlet.listen(('0.0.0.0', 5000))
 
+
 @app.route("/")
 def index():
     return render_template('index.html')
