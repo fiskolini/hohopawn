@@ -1,14 +1,14 @@
 let wrapper = {
     /** Welcome object instance */
     welcome: {
-        /** @var ({HTMLElement|null}) $el */
+        /** @let ({HTMLElement|null}) $el */
         $el: document.getElementById("wrap-welcome"),
     },
 
     /** Pawn object instance */
-    pawm: {
-        /** @var ({HTMLElement|null}) $el */
-        $el: document.getElementById("wrap-welcome"),
+    pawn: {
+        /** @let ({HTMLElement|null}) $el */
+        $el: document.getElementById("wrap-pawn"),
     },
 
     /**
@@ -18,8 +18,8 @@ let wrapper = {
      * @private
      * @throws error message if required ctx isn't valid
      */
-    _verify: function(ctx) {
-        if(wrapper.hasOwnProperty(ctx) && wrapper[ctx].$el instanceof HTMLElement){
+    _verify: function (ctx) {
+        if (wrapper.hasOwnProperty(ctx) && wrapper[ctx].$el instanceof HTMLElement) {
             return;
         }
 
@@ -36,6 +36,7 @@ let wrapper = {
     show: function (ctx) {
         this._verify(ctx);
         wrapper[ctx].$el.style.visibility = "visible";
+        console.log(wrapper[ctx].$el);
 
         return this;
     },
@@ -48,13 +49,13 @@ let wrapper = {
      */
     remove: function (ctx) {
         this._verify(ctx);
-        wrapper[ctx].$el.nextElementSibling.remove();
+        //wrapper[ctx].$el.nextElementSibling.remove();
 
         return this;
     },
 };
 
-var Username = {
+let Username = {
     get: function () {
         return window.cookie.read("username") || false;
     },
@@ -64,7 +65,7 @@ var Username = {
     }
 };
 
-var Timer = {
+let Timer = {
     get: function () {
         return window.cookie.read("timeout")
     },
@@ -74,19 +75,19 @@ var Timer = {
     }
 };
 
-var Welcome = {
+let Welcome = {
     remove: function () {
         document.getElementById("ask-name-wrapper").style.display = "none";
     }
 };
 
-var merryPawning = function () {
+let merryPawning = function () {
 
     /**
      * Username
      */
     function getUsername() {
-        var username = window.cookie.read("username");
+        let username = window.cookie.read("username");
         if (username) {
             console.log("username: " + username);
             return username
@@ -97,7 +98,7 @@ var merryPawning = function () {
     }
 
     function setUsername() {
-        var input = document.getElementById('ask-name-input').value;
+        let input = document.getElementById('ask-name-input').value;
         if (input && input.length > 3) {
             window.cookie.create("username", input, 50000000);
             location.reload()
@@ -122,7 +123,7 @@ var merryPawning = function () {
 
     function rollTheDices() {
         // check cookie
-        var cookie = window.cookie.read("usertimeout");
+        let cookie = window.cookie.read("usertimeout");
         if (cookie) return "Don't spam the poor guy :( Wait for your turn!";
 
         // if no cookie set
@@ -138,15 +139,15 @@ var merryPawning = function () {
      * Binds
      */
     function binds() {
-        var btn = document.getElementById('ask-name-btn').addEventListener("click", setUsername)
-        var pawn = document.getElementById('ask-name-btn').addEventListener("click", rollTheDices)
+        let btn = document.getElementById('ask-name-btn').addEventListener("click", setUsername)
+        let pawn = document.getElementById('ask-name-btn').addEventListener("click", rollTheDices)
     }
 
     /**
      * Init function
      */
-    var init = (function () {
-        var username = getUsername();
+    let init = (function () {
+        let username = getUsername();
         binds();
         if (username === false) {
             removeUI();
@@ -157,7 +158,7 @@ var merryPawning = function () {
     })();
 };
 
-var PawnSocket = {
+let PawnSocket = {
 
     get: function () {
         if (typeof window.socket === "undefined") {
@@ -167,23 +168,24 @@ var PawnSocket = {
     },
 
     register: function () {
-        var s = this.get();
+        let socket = this.get();
 
         // connect response receiver
-        s.on('connect', function () {
-            console.log("connected!");
-            // TODO disable load
+        socket.on('connect', function () {
+            // ... connected
         });
 
         // pawn response event receiver
-        s.on('pawn_response', function (msg) {
-            var same_author = msg.pawn_author === window.cookie.read('username'),
+        socket.on('pawn_response', function (msg) {
+            let same_author = msg.pawn_author === window.cookie.read('username'),
                 author = !same_author ? msg.pawn_author : "you",
                 inc = same_author ? " Now wait 5 seconds to pawn again." : "";
 
             $.toast({
                 heading: 'Toast',
-                text: "Daaaammmnn! <strong style='font-size:20px'>" + author + "</strong> just pawned with  <strong style='font-size:18px'>`" + msg.action.replace("_", " ") + "`</strong>!" + inc,
+                text: "Daaaammmnn! <strong style='font-size:20px'>" + author +
+                    "</strong> just pawned with  <strong style='font-size:18px'>`" +
+                    msg.action.replace("_", " ") + "`</strong>!" + inc,
                 position: 'bottom-right',
                 loader: false,
                 stack: 50,
@@ -197,33 +199,29 @@ var PawnSocket = {
     }
 };
 
-var Binds = {
+let Binds = {
     register: function () {
         // Username
-        $("#ask-name-btn").on('click', function () {
-            var username = $('#ask-name-input').val();
-            console.log(username);
-            if (username.length > 3) {
-                Username.set(username);
-                $.toast({
-                    heading: 'Login',
-                    icon: 'success',
-                    text: "Success! Prepare to voodoo someone!",
-                    position: 'bottom-right',
-                    loader: false,
-                });
-                setTimeout(function () {
-                    console.log("reloading");
-                    window.location.reload()
-                }, 2000) // for drama
-            } else {
-                $.toast({
-                    heading: 'Username',
-                    icon: 'error',
-                    text: "la la la... Insert your name!",
-                    position: 'bottom-right',
-                    loader: false
-                })
+        $("#ask-name-input").keyup(function (e) {
+            if (e.keyCode === 13) {
+                let username = $(this).val();
+                
+                if (username.length > 3) {
+                    Username.set(username);
+                    // user defined
+
+                    setTimeout(function () {
+                        window.location.reload()
+                    }, 2000) // for drama
+                } else {
+                    $.toast({
+                        heading: 'Hm... that\'s not funny!',
+                        icon: 'error',
+                        text: "You should tell us your REAL name.",
+                        position: 'bottom-right',
+                        loader: false
+                    })
+                }
             }
         });
 
@@ -232,7 +230,7 @@ var Binds = {
         }
         // Roll the dice
         $("#pawn").on('click', function () {
-            var _t = $(this);
+            let _t = $(this);
             PawnSocket.get().emit("pawn", {user: window.cookie.read("username")});
 
             // TODO gen new cookie
@@ -260,12 +258,11 @@ $(document).ready(function () {
 
     // Check if username is set
     if (Username.get()) {
-        // TODO show pawn container
+        // show pawn container
         wrapper.show('pawn').remove('welcome');
+        //wrapper.show('welcome').remove('pawn');
     } else {
-        // TODO show welcome container
+        // show welcome container
         wrapper.show('welcome').remove('pawn');
     }
-
-    return false; // Stop if not set
 });

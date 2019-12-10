@@ -106,3 +106,7 @@ venv.bak/
 
 # ide
 *.idea
+.DS_STORE
+
+# proj
+logs/*

@@ -7,19 +7,98 @@
 
     <title>Pawning someone</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/toast/jquery.toast.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fonts.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='christmas.css') }}">
 </head>
 
 <body>
 
-<div id="wrap-welcome">
+<div id="wrap-welcome" class="wrap">
     <div class="ask-name bg-danger" id="ask-name-wrapper">
         <div id="ask-name-container" class="container">
-            <h1 class="text-white">Type your name</h1>
-            <small class="text-white">You won't regret it...</small>
-            <input type="text" id="ask-name-input" class="form-control"/><br/>
-            <button type="submit" id="ask-name-btn" class="btn btn-warning text-white font-weight-bold btn-block">Submit
-            </button>
+            <h1 class="text-white main-title">Type your name</h1>
+            <input type="text" id="ask-name-input" class="form-control" placeholder="Santa claus"/><br/>
+        </div>
+    </div>
+</div>
+
+<div id="wrap-pawn" class="wrap">
+    <!-- Lights -->
+    <ul class="lightrope">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <!-- Action button -->
+    <a class="button">Christmas Button</a>
+
+    <!-- Crazy mofucka santa -->
+    <div class="wrap-santa">
+        <div class="santa">
+            <div class="santa__head">
+                <div class="santa__hat"></div>
+                <div class="santa__face">
+                    <div class="santa__eye santa__eye-1">
+                        <div class="santa__pupil santa__pupil-1"></div>
+                    </div>
+                    <div class="santa__eye santa__eye-2">
+                        <div class="santa__pupil santa__pupil-2"></div>
+                    </div>
+                    <div class="santa__nose"></div>
+                    <div class="santa__mouth"></div>
+                    <div class="santa__beard"></div>
+                </div>
+            </div>
+            <div class="santa__body">
+                <div class="santa__hand santa__hand-1"></div>
+                <div class="santa__hand santa__hand-2"></div>
+                <div class="santa__costume">
+                    <div class="santa__jacket"></div>
+                    <div class="santa__belt"></div>
+                </div>
+                <div class="santa__leg santa__leg-1"></div>
+                <div class="santa__leg santa__leg-2"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -53,34 +132,6 @@
         </div>
     </div>
 </div>#}
-<div class="wrap wrap-santa">
-    <div class="santa">
-        <div class="santa__head">
-            <div class="santa__hat"></div>
-            <div class="santa__face">
-                <div class="santa__eye santa__eye-1">
-                    <div class="santa__pupil santa__pupil-1"></div>
-                </div>
-                <div class="santa__eye santa__eye-2">
-                    <div class="santa__pupil santa__pupil-2"></div>
-                </div>
-                <div class="santa__nose"></div>
-                <div class="santa__mouth"></div>
-                <div class="santa__beard"></div>
-            </div>
-        </div>
-        <div class="santa__body">
-            <div class="santa__hand santa__hand-1"></div>
-            <div class="santa__hand santa__hand-2"></div>
-            <div class="santa__costume">
-                <div class="santa__jacket"></div>
-                <div class="santa__belt"></div>
-            </div>
-            <div class="santa__leg santa__leg-1"></div>
-            <div class="santa__leg santa__leg-2"></div>
-        </div>
-    </div>
-</div>
 
 {#
 <footer class="footer">
