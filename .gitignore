@@ -109,4 +109,4 @@ venv.bak/
 .DS_STORE
 
 # proj
-logs/*
+logs/*.log

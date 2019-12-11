@@ -36,7 +36,6 @@ let wrapper = {
     show: function (ctx) {
         this._verify(ctx);
         wrapper[ctx].$el.style.visibility = "visible";
-        console.log(wrapper[ctx].$el);
 
         return this;
     },
@@ -49,6 +48,7 @@ let wrapper = {
      */
     remove: function (ctx) {
         this._verify(ctx);
+        wrapper[ctx].$el.style.visibility = "hidden";
         //wrapper[ctx].$el.nextElementSibling.remove();
 
         return this;
@@ -87,23 +87,15 @@ let merryPawning = function () {
      * Username
      */
     function getUsername() {
-        let username = window.cookie.read("username");
-        if (username) {
-            console.log("username: " + username);
-            return username
-        } else {
-            console.log("No username set");
-            return false
-        }
+        return window.cookie.read("username") || false;
     }
 
     function setUsername() {
         let input = document.getElementById('ask-name-input').value;
         if (input && input.length > 3) {
-            window.cookie.create("username", input, 50000000);
+            window.cookie.create("username", input, 1);
             location.reload()
         }
-        console.log(input)
     }
 
     /**
@@ -115,10 +107,6 @@ let merryPawning = function () {
 
     function setUsernameInTitle() {
         document.getElementById("title").innerHTML = "Merry pawning, " + getUsername() + "!";
-    }
-
-    function removeUI() {
-        $('#ui').remove();
     }
 
     function rollTheDices() {

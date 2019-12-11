@@ -69,38 +69,32 @@
         <li></li>
     </ul>
 
-    <!-- Action button -->
-    <a class="button">Christmas Button</a>
+    <div class="window">
+		<div class="santa">
+			<div class="head">
+				<div class="face">
+					<div class="redhat">
+						<div class="whitepart"></div>
+						<div class="redpart"></div>
+						<div class="hatball"></div>
+					</div>
+					<div class="eyes"></div>
+					<div class="beard">
+						<div class="nouse"></div>
+						<div class="mouth"></div>
+					</div>
+				</div>
+				<div class="ears"></div>
+			</div>
+			<div class="body"></div>
+		</div>
+	</div>
+	<div class="message">
+		<h1>Ho ho ho!</h1>
+        <button id="pawn" class="pawnIt">Say Merry Christmas to someone</button>
+	</div>
 
     <!-- Crazy mofucka santa -->
-    <div class="wrap-santa">
-        <div class="santa">
-            <div class="santa__head">
-                <div class="santa__hat"></div>
-                <div class="santa__face">
-                    <div class="santa__eye santa__eye-1">
-                        <div class="santa__pupil santa__pupil-1"></div>
-                    </div>
-                    <div class="santa__eye santa__eye-2">
-                        <div class="santa__pupil santa__pupil-2"></div>
-                    </div>
-                    <div class="santa__nose"></div>
-                    <div class="santa__mouth"></div>
-                    <div class="santa__beard"></div>
-                </div>
-            </div>
-            <div class="santa__body">
-                <div class="santa__hand santa__hand-1"></div>
-                <div class="santa__hand santa__hand-2"></div>
-                <div class="santa__costume">
-                    <div class="santa__jacket"></div>
-                    <div class="santa__belt"></div>
-                </div>
-                <div class="santa__leg santa__leg-1"></div>
-                <div class="santa__leg santa__leg-2"></div>
-            </div>
-        </div>
-    </div>
 </div>
 {#
 <div class="ask-name bg-danger" id="ask-name-wrapper">
@@ -155,7 +149,9 @@
 <script type=text/javascript src="{{ url_for('static', filename='vendor/jquery.3.3.1.min.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='vendor/socket.io.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='cookies.js') }}"></script>
+{#
 <script type=text/javascript src="{{ url_for('static', filename='christmas.js') }}"></script>
+#}
 <script type=text/javascript src="{{ url_for('static', filename='Pawn.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='cookies.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='main.js') }}"></script>
