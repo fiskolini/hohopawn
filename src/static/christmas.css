@@ -247,7 +247,7 @@ body {
     height: 300px;
     background: #a0d5d3;
     position: absolute;
-    top: 45%;
+    top: 40%;
     left: 50%;
     border-radius: 50%;
     margin-top: -60px;
@@ -549,41 +549,42 @@ body {
 .message h1 {
     font-style: normal;
     font-size: 75px;
-    margin-bottom: 0;
+    line-height: 1;
     white-space: nowrap;
     text-align: center;
+    margin: 0;
 }
 
-.message h2 {
+.message p {
     margin: 0;
     font-size: 20px;
     text-align: center;
     white-space: nowrap;
 }
 
-.message h2 a {
-    color: #f7be10;
-    opacity: 0.8;
-}
-
-.message h2 a:hover {
-    opacity: 1;
-}
-
-.pawnIt {
+#pawn {
+    cursor: pointer;
     color: white;
     padding: 12px 20px;
     box-sizing: border-box;
     border: none;
     background-color: rgba(0, 0, 0, 0.25);
     border-radius: 5px;
-    margin: 10px auto;
+    margin: 30px auto 0;
     transition: background-color 0.5s ease;
     display: block;
     font-family: "Josefin", sans-serif;
     text-align: center;
     font-size: 10pt;
     border-bottom: 2px solid rgba(0, 0, 0, .2);
+}
+
+#pawn:disabled {
+    cursor: progress;
+}
+#pawn:hover {
+    background-color: rgba(0, 0, 0, 0.45);
+    border-bottom: 2px solid rgba(0, 0, 0, .6);
 }
 
 @-webkit-keyframes bodyLaugh {

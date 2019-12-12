@@ -26,16 +26,16 @@ class Pawn:
         Exec all
         :return:
         """
-        # TODO roll_dice to get selected
+        # roll_dice to get selected
         run_this = self.__roll_dice()
 
-        # TODO execute selected
+        # execute selected
         self.__exec_it(run_this['path'])
 
-        # TODO preserve/log execution
+        # preserve/log execution
         self.__log_execution(run_this['name'])
 
-        # TODO return selected name
+        # return selected name
         return run_this['name']
 
     def __roll_dice(self):
@@ -62,7 +62,7 @@ class Pawn:
 
     def __log_execution(self, cmd):
         dir_logs = os.path.join(self.cur_dir, 'logs')
-        dir_file = os.path.join(dir_logs, 'log.txt')
+        dir_file = os.path.join(dir_logs, 'log.log')
         with open(dir_file, "a") as myfile:
             myfile.write("{} just did {}.\n".format(self.uname, cmd))
 
