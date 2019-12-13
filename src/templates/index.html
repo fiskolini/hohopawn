@@ -7,88 +7,97 @@
 
     <title>Pawning someone</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/toast/jquery.toast.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fonts.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='christmas.css') }}">
 </head>
 
 <body>
 
-<div id="wrap-welcome">
+<div id="wrap-welcome" class="wrap">
     <div class="ask-name bg-danger" id="ask-name-wrapper">
         <div id="ask-name-container" class="container">
-            <h1 class="text-white">Type your name</h1>
-            <small class="text-white">You won't regret it...</small>
-            <input type="text" id="ask-name-input" class="form-control"/><br/>
-            <button type="submit" id="ask-name-btn" class="btn btn-warning text-white font-weight-bold btn-block">Submit
-            </button>
-        </div>
-    </div>
-</div>
-{#
-<div class="ask-name bg-danger" id="ask-name-wrapper">
-    <div id="ask-name-container" class="container">
-        <h1 class="text-white">Type your name</h1>
-        <small class="text-white">You won't regret it...</small>
-        <input type="text" id="ask-name-input" class="form-control"/><br/>
-        <button type="submit" id="ask-name-btn" class="btn btn-warning text-white font-weight-bold btn-block">Submit
-        </button>
-    </div>
-</div>
-<div id="ui container-fluid">
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-danger border-bottom shadow-sm text-white">
-        <h2 class="my-0 mr-md-auto font-weight-bold text-center" style="margin: 0 auto;" id="title">Merry Pawning!</h2>
-    </div>
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron text-center" style="background-color: transparent !important;">
-        <div class="container">
-            <h1 class="display-3 text-white font-weight-bold">Wanna Voodoo someone?</h1>
-            <p class="text-white font-weight-bold ">By pressing this button, you are deliberatly voodooing
-                someone.
-                It will roll some dices (or simulate it) and will choose one from 6 scripts to pawn the poor
-                guy...</p>
-            <p class="text-white font-weight-bold ">You have an option not to do it..</p>
-            <p>
-                <button id="pawn" class="btn btn-danger btn-lg" href="#" role="button">Roll the dices &raquo;
-                </button>
-            </p>
-        </div>
-    </div>
-</div>#}
-<div class="wrap wrap-santa">
-    <div class="santa">
-        <div class="santa__head">
-            <div class="santa__hat"></div>
-            <div class="santa__face">
-                <div class="santa__eye santa__eye-1">
-                    <div class="santa__pupil santa__pupil-1"></div>
-                </div>
-                <div class="santa__eye santa__eye-2">
-                    <div class="santa__pupil santa__pupil-2"></div>
-                </div>
-                <div class="santa__nose"></div>
-                <div class="santa__mouth"></div>
-                <div class="santa__beard"></div>
-            </div>
-        </div>
-        <div class="santa__body">
-            <div class="santa__hand santa__hand-1"></div>
-            <div class="santa__hand santa__hand-2"></div>
-            <div class="santa__costume">
-                <div class="santa__jacket"></div>
-                <div class="santa__belt"></div>
-            </div>
-            <div class="santa__leg santa__leg-1"></div>
-            <div class="santa__leg santa__leg-2"></div>
+            <h1 class="text-white main-title">Type your name</h1>
+            <input type="text" id="ask-name-input" class="form-control" placeholder="Santa claus"/>
         </div>
     </div>
 </div>
 
-{#
-<footer class="footer">
-    <div class="container">
-        <span class="text-muted">Developed by sertas crew ans phil collins. Enjoy.</span>
-    </div>
-</footer>#}
+<div id="wrap-pawn" class="wrap">
+    <!-- Faggot lights -->
+    <ul class="lightrope">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
 
+    <!-- Crazy mofucka santa -->
+    <div class="window">
+		<div class="santa">
+			<div class="head">
+				<div class="face">
+					<div class="redhat">
+						<div class="whitepart"></div>
+						<div class="redpart"></div>
+						<div class="hatball"></div>
+					</div>
+					<div class="eyes"></div>
+					<div class="beard">
+						<div class="nouse"></div>
+						<div class="mouth"></div>
+					</div>
+				</div>
+				<div class="ears"></div>
+			</div>
+			<div class="body"></div>
+		</div>
+	</div>
+
+    <!-- Here comes the fun -->
+	<div class="message">
+		<h1>Ho ho ho!</h1>
+        <p>Merry pawn to everyone!</p>
+        <button id="pawn" class="pawnIt">Say Merry Christmas to someone</button>
+	</div>
+</div>
 <!-- Audio -->
 <audio class="hidden" id="plucky">
     <source src="/static/sounds/plucky.ogg" type="audio/ogg">
@@ -104,11 +113,9 @@
 <script type=text/javascript src="{{ url_for('static', filename='vendor/jquery.3.3.1.min.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='vendor/socket.io.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='cookies.js') }}"></script>
-<script type=text/javascript src="{{ url_for('static', filename='christmas.js') }}"></script>
-<script type=text/javascript src="{{ url_for('static', filename='Pawn.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='cookies.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='main.js') }}"></script>
-{#<script type=text/javascript src="{{ url_for('static', filename='vendor/snowstorm.js') }}"></script>#}
+<script type=text/javascript src="{{ url_for('static', filename='vendor/snowstorm.js') }}"></script>
 <script type=text/javascript src="{{ url_for('static', filename='vendor/toast/jquery.toast.min.js') }}"></script>
 </body>
 

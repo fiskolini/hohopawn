@@ -1,14 +1,14 @@
 let wrapper = {
     /** Welcome object instance */
     welcome: {
-        /** @var ({HTMLElement|null}) $el */
+        /** @let ({HTMLElement|null}) $el */
         $el: document.getElementById("wrap-welcome"),
     },
 
     /** Pawn object instance */
-    pawm: {
-        /** @var ({HTMLElement|null}) $el */
-        $el: document.getElementById("wrap-welcome"),
+    pawn: {
+        /** @let ({HTMLElement|null}) $el */
+        $el: document.getElementById("wrap-pawn"),
     },
 
     /**
@@ -18,8 +18,8 @@ let wrapper = {
      * @private
      * @throws error message if required ctx isn't valid
      */
-    _verify: function(ctx) {
-        if(wrapper.hasOwnProperty(ctx) && wrapper[ctx].$el instanceof HTMLElement){
+    _verify: function (ctx) {
+        if (wrapper.hasOwnProperty(ctx) && wrapper[ctx].$el instanceof HTMLElement) {
             return;
         }
 
@@ -48,13 +48,14 @@ let wrapper = {
      */
     remove: function (ctx) {
         this._verify(ctx);
-        wrapper[ctx].$el.nextElementSibling.remove();
+        wrapper[ctx].$el.style.visibility = "hidden";
+        //wrapper[ctx].$el.nextElementSibling.remove();
 
         return this;
     },
 };
 
-var Username = {
+let Username = {
     get: function () {
         return window.cookie.read("username") || false;
     },
@@ -64,100 +65,34 @@ var Username = {
     }
 };
 
-var Timer = {
-    get: function () {
-        return window.cookie.read("timeout")
-    },
+let Pawn = {
+    /**
+     *
+     * @param {object} msg
+     */
+    commit: function (msg) {
+        let same_author = msg.pawn_author === window.cookie.read('username'),
+            author = !same_author ? msg.pawn_author : "you",
+            inc = same_author ? " Now wait 5 seconds to pawn again." : "";
 
-    start: function () {
-        window.cookie.create("timeout", (new Date).getTime(), 10)
+        $.toast({
+            heading: 'Toast',
+            text: "Daaaammmnn! <strong style='font-size:20px'>" + author +
+                "</strong> just pawned with  <strong style='font-size:18px'>`" +
+                msg.action.replace("_", " ") + "`</strong>!" + inc,
+            position: 'bottom-right',
+            loader: false,
+            stack: 50,
+            icon: 'success',
+            hideAfter: false,
+            bgColor: '#' + Math.floor(Math.random() * 16777215).toString(16)
+        });
+        // play sound
+        document.getElementById("plucky").play();
     }
 };
 
-var Welcome = {
-    remove: function () {
-        document.getElementById("ask-name-wrapper").style.display = "none";
-    }
-};
-
-var merryPawning = function () {
-
-    /**
-     * Username
-     */
-    function getUsername() {
-        var username = window.cookie.read("username");
-        if (username) {
-            console.log("username: " + username);
-            return username
-        } else {
-            console.log("No username set");
-            return false
-        }
-    }
-
-    function setUsername() {
-        var input = document.getElementById('ask-name-input').value;
-        if (input && input.length > 3) {
-            window.cookie.create("username", input, 50000000);
-            location.reload()
-        }
-        console.log(input)
-    }
-
-    /**
-     * Other functions
-     */
-    function removeInputUsername() {
-        document.getElementById("ask-name-wrapper").style.display = "none";
-    }
-
-    function setUsernameInTitle() {
-        document.getElementById("title").innerHTML = "Merry pawning, " + getUsername() + "!";
-    }
-
-    function removeUI() {
-        $('#ui').remove();
-    }
-
-    function rollTheDices() {
-        // check cookie
-        var cookie = window.cookie.read("usertimeout");
-        if (cookie) return "Don't spam the poor guy :( Wait for your turn!";
-
-        // if no cookie set
-
-        // make request
-
-        // set cookie
-        window.cookie.create("usertimeout", true, 20);
-        // block ui
-    }
-
-    /**
-     * Binds
-     */
-    function binds() {
-        var btn = document.getElementById('ask-name-btn').addEventListener("click", setUsername)
-        var pawn = document.getElementById('ask-name-btn').addEventListener("click", rollTheDices)
-    }
-
-    /**
-     * Init function
-     */
-    var init = (function () {
-        var username = getUsername();
-        binds();
-        if (username === false) {
-            removeUI();
-            return false;
-        }
-        removeInputUsername();
-        setUsernameInTitle()
-    })();
-};
-
-var PawnSocket = {
+let WSocket = {
 
     get: function () {
         if (typeof window.socket === "undefined") {
@@ -167,84 +102,64 @@ var PawnSocket = {
     },
 
     register: function () {
-        var s = this.get();
+        let socket = this.get();
 
         // connect response receiver
-        s.on('connect', function () {
-            console.log("connected!");
-            // TODO disable load
+        socket.on('connect', function () {
+            // ... connected
         });
 
         // pawn response event receiver
-        s.on('pawn_response', function (msg) {
-            var same_author = msg.pawn_author === window.cookie.read('username'),
-                author = !same_author ? msg.pawn_author : "you",
-                inc = same_author ? " Now wait 5 seconds to pawn again." : "";
 
-            $.toast({
-                heading: 'Toast',
-                text: "Daaaammmnn! <strong style='font-size:20px'>" + author + "</strong> just pawned with  <strong style='font-size:18px'>`" + msg.action.replace("_", " ") + "`</strong>!" + inc,
-                position: 'bottom-right',
-                loader: false,
-                stack: 50,
-                icon: 'success',
-                hideAfter: false,
-                bgColor: '#' + Math.floor(Math.random() * 16777215).toString(16)
-            });
-            // play sound
-            document.getElementById("plucky").play();
-        });
+        socket.on('pawn_response', Pawn.commit);
     }
 };
 
-var Binds = {
+let Binds = {
+    $inputEl: $("#ask-name-input"),
+    $pawnBt: $("#pawn"),
+
     register: function () {
         // Username
-        $("#ask-name-btn").on('click', function () {
-            var username = $('#ask-name-input').val();
-            console.log(username);
-            if (username.length > 3) {
-                Username.set(username);
-                $.toast({
-                    heading: 'Login',
-                    icon: 'success',
-                    text: "Success! Prepare to voodoo someone!",
-                    position: 'bottom-right',
-                    loader: false,
-                });
-                setTimeout(function () {
-                    console.log("reloading");
-                    window.location.reload()
-                }, 2000) // for drama
-            } else {
-                $.toast({
-                    heading: 'Username',
-                    icon: 'error',
-                    text: "la la la... Insert your name!",
-                    position: 'bottom-right',
-                    loader: false
-                })
+        this.$inputEl.keyup(function (e) {
+            if (e.keyCode === 13) {
+                let username = $(this).val();
+
+                if (username.length > 3) {
+                    Username.set(username);
+                    // user defined
+
+                    setTimeout(function () {
+                        window.location.reload()
+                    }, 2000) // for drama
+                } else {
+                    $.toast({
+                        heading: 'Hm... that\'s not funny!',
+                        icon: 'error',
+                        text: "You should tell us your REAL name.",
+                        position: 'bottom-right',
+                        loader: false
+                    })
+                }
             }
         });
 
         if (window.cookie.read('block_pawn')) {
-            $("#pawn").prop('disabled', true);
+            this.$pawnBt.prop('disabled', true);
         }
         // Roll the dice
-        $("#pawn").on('click', function () {
-            var _t = $(this);
-            PawnSocket.get().emit("pawn", {user: window.cookie.read("username")});
+        this.$pawnBt.on('click', function () {
+            let _t = $(this);
+            WSocket.get().emit("pawn", {user: window.cookie.read("username")});
 
-            // TODO gen new cookie
+            // gen new cookie
             window.cookie.create('block_pawn', true, 0.00005787037037); // 5secs
 
-            // TODO block this button
+            // block this button
             _t.prop('disabled', true);
             setTimeout(function () {
                 _t.prop("disabled", false)
             }, 5000);
-
-            // TODO start timer to next available click
         });
     }
 };
@@ -254,18 +169,17 @@ var Binds = {
  */
 $(document).ready(function () {
     // Register socket actions
-    PawnSocket.register();
+    WSocket.register();
     // Register bind events
     Binds.register();
 
     // Check if username is set
     if (Username.get()) {
-        // TODO show pawn container
+        // show pawn container
         wrapper.show('pawn').remove('welcome');
+        //wrapper.show('welcome').remove('pawn');
     } else {
-        // TODO show welcome container
+        // show welcome container
         wrapper.show('welcome').remove('pawn');
     }
-
-    return false; // Stop if not set
 });
