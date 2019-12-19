@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 expressions[0]="http://www.nyan.cat/"
 expressions[1]="https://geekprank.com/hacker/"
-expressions[2]="https://answers.yahoo.com/question/index;_ylt=AwrC1zF2fwpcpBgA3yxPmolQ;_ylu=X3oDMTEybTFvb2wxBGNvbG8DYmYxBHBvcwMxBHZ0aWQDQjI1NTlfMQRzZWMDc3I-?qid=20081210174759AADf9SE"
-expressions[3]="https://answers.yahoo.com/question/index;_ylt=AwrC1Cqxfwpcol4AkipPmolQ;_ylu=X3oDMTEybTFvb2wxBGNvbG8DYmYxBHBvcwMxBHZ0aWQDQjI1NTlfMQRzZWMDc3I-?qid=20110126015747AAlxX4M"
+expressions[2]="https://www.beevo.com/"
+expressions[3]="https://sites.google.com/nisdtx.org/the-w-site"
+expressions[4]="http://www.idiotproofwebsite.com/"
+expressions[5]="https://mrdoob.com/#/111/branching"
+expressions[6]="http://www.trex-game.skipser.com/"
 selectedexpression=${expressions[$RANDOM % ${#expressions[@]} ]}
 sensible-browser "$selectedexpression"
